@@ -12,7 +12,9 @@
 
 # Package Files #
 *.jar
+!docker/is-as-km/dropins/*.jar
 *.war
+!docker/is-as-km/webapps/*.war
 *.nar
 *.ear
 *.zip
