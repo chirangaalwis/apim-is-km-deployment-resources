@@ -1,0 +1,46 @@
+# -------------------------------------------------------------------------------------
+# Azure DevOps Pipeline for building WSO2 API Manager Custom Docker Image
+# --------------------------------------------------------------------------------------
+
+parameters:
+  # WSO2 API Manager Updates 2.0 update level
+  - name: WSO2_APIM_UPDATE_LEVEL
+    displayName: Updates 2.0 update level for WSO2 API Manager
+    type: string
+
+variables:
+  - template: ./common-variables.yaml
+  # Base API Manager version
+  - name: APIM_BASE_VERSION
+    value: '4.0.0'
+
+trigger:
+  - none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    # Add DevOps Resources for mapping Docker source GitHub Repositories to this list
+    - repository: docker-source
+      type: github
+      name: chirangaalwis/neogenomics-deployment-resources
+      ref: refs/heads/main
+      endpoint: sample-github
+
+jobs:
+  - template: ./build-image-template.yaml
+    parameters:
+      CONTAINER_IMAGE_REG_CONNECTION: $(CONTAINER_IMAGE_REG_CONNECTION)
+      CONTAINER_REGISTRY_IDENTIFIER: $(CONTAINER_REGISTRY_IDENTIFIER)
+      GITHUB_SERVICE_CONNECTION: $(GITHUB_SERVICE_CONNECTION)
+      GITHUB_REPOSITORY_RESOURCE: $(DOCKER_RESOURCE_REPO_DIR)
+      WSO2_PRODUCT_NAME: 'API Manager'
+      CONTAINER_IMAGE_REPOSITORY: 'wso2am'
+      CONTAINER_IMAGE_TAGS: |
+        $(APIM_BASE_VERSION)
+        $(APIM_BASE_VERSION).${{ parameters.WSO2_APIM_UPDATE_LEVEL }}
+      CONTAINER_IMAGE_BUILD_CONTEXT: '$(Agent.BuildDirectory)/$(DOCKER_RESOURCE_REPO_DIR)/docker/apim'
+      CONTAINER_IMAGE_BUILD_ARGS: '--build-arg BASE_PRODUCT_VERSION=$(APIM_BASE_VERSION).${{ parameters.WSO2_APIM_UPDATE_LEVEL }}'
+      DOCKERFILE_PATH: '$(Agent.BuildDirectory)/$(DOCKER_RESOURCE_REPO_DIR)/docker/apim/Dockerfile'

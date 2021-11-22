@@ -1,0 +1,68 @@
+# -------------------------------------------------------------------------------------
+# Build WSO2 Product Docker Image Azure Pipeline Template
+# --------------------------------------------------------------------------------------
+
+parameters:
+  # Target container registry configurations
+  # Azure DevOps Service Connection to the target container image registry
+  - name: CONTAINER_IMAGE_REG_CONNECTION
+    type: string
+  # Target container registry identifier (hostname:port definition)
+  - name: CONTAINER_REGISTRY_IDENTIFIER
+    type: string
+
+  # Git configurations
+  # Azure DevOps Service Connection for GitHub
+  - name: GITHUB_SERVICE_CONNECTION
+    type: string
+  # Name of the GitHub Azure DevOps Pipeline resource mapping the Docker source Repository
+  - name: GITHUB_REPOSITORY_RESOURCE
+    type: string
+
+  # Name of the WSO2 product for which the image is to be built
+  - name: WSO2_PRODUCT_NAME
+    type: string
+
+  # Product container image properties
+  # Image repository
+  - name: CONTAINER_IMAGE_REPOSITORY
+    type: string
+  # Image tags
+  - name: CONTAINER_IMAGE_TAGS
+    type: string
+  # Image build context
+  - name: CONTAINER_IMAGE_BUILD_CONTEXT
+    type: string
+  # Image build arguments
+  - name: CONTAINER_IMAGE_BUILD_ARGS
+    type: string
+  # Dockerfile path
+  - name: DOCKERFILE_PATH
+    type: string
+
+jobs:
+  - job: build_docker_image
+    displayName: "Build custom Docker image for ${{ parameters.WSO2_PRODUCT_NAME }}"
+    steps:
+      - checkout: ${{ parameters.GITHUB_REPOSITORY_RESOURCE }}
+        path: ${{ parameters.GITHUB_REPOSITORY_RESOURCE }}
+      - task: Docker@2
+        displayName: 'Build ${{ parameters.WSO2_PRODUCT_NAME }} Docker container image'
+        inputs:
+          command: build
+          containerRegistry: ${{ parameters.CONTAINER_IMAGE_REG_CONNECTION }}
+          repository: ${{ parameters.CONTAINER_IMAGE_REPOSITORY }}
+          buildContext: ${{ parameters.CONTAINER_IMAGE_BUILD_CONTEXT }}
+          arguments: ${{ parameters.CONTAINER_IMAGE_BUILD_ARGS }}
+          Dockerfile: ${{ parameters.DOCKERFILE_PATH }}
+          addPipelineData: false
+          tags: |
+            ${{ parameters.CONTAINER_IMAGE_BUILD_ARGS }}
+      - task: Docker@2
+        displayName: 'Push ${{ parameters.WSO2_PRODUCT_NAME }} Docker container image'
+        inputs:
+          containerRegistry: ${{ parameters.CONTAINER_IMAGE_REG_CONNECTION }}
+          repository: ${{ parameters.CONTAINER_IMAGE_REPOSITORY }}
+          command: push
+          tags: |
+            ${{ parameters.CONTAINER_IMAGE_BUILD_ARGS }}

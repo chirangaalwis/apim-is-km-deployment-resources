@@ -1,0 +1,17 @@
+# -------------------------------------------------------------------------------------
+# Common Azure DevOps Pipeline Variables
+# --------------------------------------------------------------------------------------
+
+variables:
+  # Target container registry configurations
+  # Azure DevOps Service Connection to target container image registry
+  CONTAINER_IMAGE_REG_CONNECTION: 'clevercare-acr'
+  # Target container registry identifier (hostname:port definition)
+  CONTAINER_REGISTRY_IDENTIFIER: 'clevercareacr.azurecr.io'
+
+  # Build configurations
+  # Name of the directory to which the Docker source repository is cloned
+  DOCKER_RESOURCE_REPO_DIR: 'docker-source'
+
+  # Azure DevOps Service Connection to GitHub for downloading Release Asset artifacts
+  GITHUB_SERVICE_CONNECTION: 'sample-github'
