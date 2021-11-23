@@ -27,7 +27,7 @@ resources:
       type: github
       name: chirangaalwis/neogenomics-deployment-resources
       ref: refs/heads/main
-      endpoint: sample-github
+      endpoint: chirangaalwis
 
 jobs:
   - template: ./build-image-template.yaml

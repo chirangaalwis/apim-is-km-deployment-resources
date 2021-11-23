@@ -5,9 +5,9 @@
 variables:
   # Target container registry configurations
   # Azure DevOps Service Connection to target container image registry
-  CONTAINER_IMAGE_REG_CONNECTION: 'clevercare-acr'
+  CONTAINER_IMAGE_REG_CONNECTION: 'wso2srernd-acr'
   # Target container registry identifier (hostname:port definition)
-  CONTAINER_REGISTRY_IDENTIFIER: 'clevercareacr.azurecr.io'
+  CONTAINER_REGISTRY_IDENTIFIER: 'wso2srernd.azurecr.io'
 
   # Build configurations
   # Name of the directory to which the Docker source repository is cloned
