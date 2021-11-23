@@ -12,6 +12,3 @@ variables:
   # Build configurations
   # Name of the directory to which the Docker source repository is cloned
   DOCKER_RESOURCE_REPO_DIR: 'docker-source'
-
-  # Azure DevOps Service Connection to GitHub for downloading Release Asset artifacts
-  GITHUB_SERVICE_CONNECTION: 'sample-github'

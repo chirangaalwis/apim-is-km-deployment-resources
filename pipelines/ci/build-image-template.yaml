@@ -12,9 +12,6 @@ parameters:
     type: string
 
   # Git configurations
-  # Azure DevOps Service Connection for GitHub
-  - name: GITHUB_SERVICE_CONNECTION
-    type: string
   # Name of the GitHub Azure DevOps Pipeline resource mapping the Docker source Repository
   - name: GITHUB_REPOSITORY_RESOURCE
     type: string
