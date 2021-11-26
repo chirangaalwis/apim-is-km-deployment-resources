@@ -3965,7 +3965,7 @@ mysql:
 
 
     mysql_is_bps.sql: |-
-      DROP DATABASE IF EXISTS WSO2AM_DB;
+      DROP DATABASE IF EXISTS WSO2IS_BPS_DB;
       CREATE DATABASE WSO2IS_BPS_DB;
       GRANT ALL ON WSO2IS_BPS_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
 
