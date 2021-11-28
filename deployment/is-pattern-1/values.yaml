@@ -123,6 +123,21 @@ wso2:
             nginx.ingress.kubernetes.io/session-cookie-name: "route"
             nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
 
+      customConfig:
+        cryptography:
+          securityResourcesSecret: "is-security-resources"
+          keyStores:
+            primary:
+              alias: "wso2carbonprimary"
+              password: "${IS_PRIMARY_KEY_STORE_PASSWORD}"
+            secondary:
+              alias: "wso2carbonsecondary"
+              password: "${IS_SECONDARY_KEY_STORE_PASSWORD}"
+            internal:
+              alias: "wso2carboninternal"
+              password: "${IS_INTERNAL_KEY_STORE_PASSWORD}"
+          trustStorePassword: "${IS_TRUST_STORE_PASSWORD}"
+
   # Configurations for the logstash container image and elasticsearch authorization credentials
   # Centralized logging is disabled by default. If it is required to enable centralized logging, please follow the instructions
   # provided in the documentation (https://github.com/wso2/kubernetes-is/tree/master/advanced/helm/is-pattern-1#enabling-centralized-logging)

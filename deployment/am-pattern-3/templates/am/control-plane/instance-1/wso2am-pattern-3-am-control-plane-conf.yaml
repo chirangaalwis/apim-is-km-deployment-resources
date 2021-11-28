@@ -62,26 +62,31 @@ data:
     password = "wso2carbon"
     driver = "com.mysql.cj.jdbc.Driver"
 
-    [keystore.tls]
-    file_name =  "wso2carbon.jks"
+    [keystore.primary]
+    file_name =  "primaryKeyStore.jks"
     type =  "JKS"
-    password =  "wso2carbon"
-    alias =  "wso2carbon"
-    key_password =  "wso2carbon"
+    alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.alias | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.password | quote }}
+    key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.password | quote }}
 
-    #[keystore.primary]
-    #file_name =  "wso2carbon.jks"
-    #type =  "JKS"
-    #password =  "wso2carbon"
-    #alias =  "wso2carbon"
-    #key_password =  "wso2carbon"
+    [keystore.tls]
+    file_name =  "secondaryKeyStore.jks"
+    type =  "JKS"
+    alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.alias | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.password | quote }}
+    key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.password | quote }}
 
-    #[keystore.internal]
-    #file_name =  "wso2carbon.jks"
-    #type =  "JKS"
-    #password =  "wso2carbon"
-    #alias =  "wso2carbon"
-    #key_password =  "wso2carbon"
+    [keystore.internal]
+    file_name =  "internalKeyStore.jks"
+    type =  "JKS"
+    alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.alias | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
+    key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
+
+    [truststore]
+    file_name = "client-truststore.jks"
+    type = "JKS"
+    password = {{ .Values.wso2.deployment.am.customConfig.cryptography.trustStorePassword | quote }}
 
     [[apim.gateway.environment]]
     name = "Default"
