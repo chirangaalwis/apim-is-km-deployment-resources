@@ -99,6 +99,14 @@ spec:
               value: {{ $val | quote }}
           {{- end }}
           {{- end }}
+          volumeMounts:
+            - name: wso2mi-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/conf
+            - name: wso2mi-security-resources
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
+            - name: wso2mi-conf-entrypoint
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
       serviceAccountName: {{ .Values.kubernetes.serviceAccount }}
       {{- if .Values.wso2.deployment.mi.imagePullSecrets }}
       imagePullSecrets:
@@ -107,3 +115,14 @@ spec:
       imagePullSecrets:
         - name: {{ template "am-pattern-3.resource.prefix" . }}-mi-1-wso2-private-registry-creds
       {{ end }}
+      volumes:
+        - name: wso2mi-conf
+          configMap:
+            name: {{ template "am-pattern-3.resource.prefix" . }}-mi-conf
+        - name: wso2mi-security-resources
+          secret:
+            secretName: {{ .Values.wso2.deployment.mi.customConfig.cryptography.securityResourcesSecret | quote }}
+        - name: wso2mi-conf-entrypoint
+          configMap:
+            name: {{ template "am-pattern-3.resource.prefix" . }}-mi-conf-entrypoint
+            defaultMode: 0407

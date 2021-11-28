@@ -114,6 +114,8 @@ spec:
           volumeMounts:
             - name: wso2am-conf
               mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
+            - name: wso2am-security-resources
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
             {{ if .Values.wso2.deployment.persistentRuntimeArtifacts.apacheSolrIndexing.enabled }}
             - name: wso2am-local-carbon-database-storage
               mountPath: /home/wso2carbon/solr/database
@@ -139,6 +141,9 @@ spec:
         - name: wso2am-conf
           configMap:
             name: {{ template "am-pattern-3.resource.prefix" . }}-am-cp-1-conf
+        - name: wso2am-security-resources
+          secret:
+            secretName: {{ .Values.wso2.deployment.am.customConfig.cryptography.securityResourcesSecret | quote }}
         {{ if .Values.wso2.deployment.persistentRuntimeArtifacts.apacheSolrIndexing.enabled }}
         - name: wso2am-local-carbon-database-storage
           persistentVolumeClaim:

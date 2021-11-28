@@ -69,11 +69,6 @@ data:
     password = "wso2carbon"
     driver = "com.mysql.cj.jdbc.Driver"
 
-    [truststore]
-    file_name="client-truststore.jks"
-    password="wso2carbon"
-    type="JKS"
-
     [account_recovery.endpoint.auth]
     hash= "66cd9688a2ae068244ea01e70f0e230f5623b7fa4cdecb65070a09ec06452262"
 
@@ -107,8 +102,30 @@ data:
     data_source="jdbc/WSO2ConsentDS"
 
     [keystore.primary]
-    name = "wso2carbon.jks"
-    password = "wso2carbon"
+    file_name =  "primaryKeyStore.jks"
+    type =  "JKS"
+    alias =  {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.primary.alias | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.primary.password | quote }}
+    key_password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.primary.password | quote }}
+
+    [keystore.tls]
+    file_name =  "secondaryKeyStore.jks"
+    type =  "JKS"
+    alias =  {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.secondary.alias | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.secondary.password | quote }}
+    key_password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.secondary.password | quote }}
+
+    [keystore.internal]
+    file_name =  "internalKeyStore.jks"
+    type =  "JKS"
+    alias =  {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.alias | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password | quote }}
+    key_password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password | quote }}
+
+    [truststore]
+    file_name = "client-truststore.jks"
+    type = "JKS"
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.trustStorePassword | quote }}
 
     [clustering]
     membership_scheme = "kubernetes"

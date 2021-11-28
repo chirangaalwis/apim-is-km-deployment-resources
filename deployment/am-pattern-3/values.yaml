@@ -104,6 +104,21 @@ wso2:
         # How often (in seconds) to perform the probe
         periodSeconds: 10
 
+      customConfig:
+        cryptography:
+          securityResourcesSecret: "am-security-resources"
+          keyStores:
+            primary:
+              alias: "wso2carbonprimary"
+              password: "${AM_PRIMARY_KEY_STORE_PASSWORD}"
+            secondary:
+              alias: "wso2carbonsecondary"
+              password: "${AM_SECONDARY_KEY_STORE_PASSWORD}"
+            internal:
+              alias: "wso2carboninternal"
+              password: "${AM_INTERNAL_KEY_STORE_PASSWORD}"
+          trustStorePassword: "${AM_TRUST_STORE_PASSWORD}"
+
       # API Manager's WebSub specific configurations
       websub:
         # Configure Ingress
@@ -273,6 +288,21 @@ wso2:
           annotations:
             kubernetes.io/ingress.class: "nginx"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+      customConfig:
+        cryptography:
+          securityResourcesSecret: "mi-security-resources"
+          keyStores:
+            primary:
+              alias: "wso2carbonprimary"
+              password: "${MI_PRIMARY_KEY_STORE_PASSWORD}"
+            secondary:
+              alias: "wso2carbonsecondary"
+              password: "${MI_SECONDARY_KEY_STORE_PASSWORD}"
+            internal:
+              alias: "wso2carboninternal"
+              password: "${MI_INTERNAL_KEY_STORE_PASSWORD}"
+          trustStorePassword: "${MI_TRUST_STORE_PASSWORD}"
 
 kubernetes:
   # Name of Kubernetes service account

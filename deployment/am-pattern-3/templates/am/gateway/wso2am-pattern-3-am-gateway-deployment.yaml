@@ -101,6 +101,8 @@ spec:
         volumeMounts:
         - name: wso2am-gateway-conf
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
+        - name: wso2am-security-resources
+          mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
       serviceAccountName: {{ .Values.kubernetes.serviceAccount }}
       {{- if .Values.wso2.deployment.am.imagePullSecrets }}
       imagePullSecrets:
@@ -113,3 +115,6 @@ spec:
       - name: wso2am-gateway-conf
         configMap:
           name: {{ template "am-pattern-3.resource.prefix" . }}-am-gateway-conf
+      - name: wso2am-security-resources
+        secret:
+          secretName: {{ .Values.wso2.deployment.am.customConfig.cryptography.securityResourcesSecret | quote }}

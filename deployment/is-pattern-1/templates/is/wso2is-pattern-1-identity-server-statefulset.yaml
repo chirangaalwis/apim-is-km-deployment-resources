@@ -136,6 +136,8 @@ spec:
               subPath: deployment.toml
             - name: identity-server-bin
               mountPath: /home/wso2carbon/wso2-config-volume/bin
+            - name: wso2is-security-resources
+              mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
             {{ if .Values.wso2.deployment.dependencies.mysql.enabled }}
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/dropins
@@ -204,6 +206,9 @@ spec:
       - name: identity-server-bin
         configMap:
           name: {{ template "is-pattern-1.resource.prefix" . }}-identity-server-bin
+      - name: wso2is-security-resources
+        secret:
+          secretName: {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.securityResourcesSecret | quote }}
       {{ if .Values.wso2.deployment.persistentRuntimeArtifacts.sharedArtifacts.enabled }}
       - name: identity-server-volume-claim-tenants-storage
         persistentVolumeClaim:
