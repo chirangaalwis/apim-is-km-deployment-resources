@@ -25,7 +25,7 @@ resources:
     # Add DevOps Resources for mapping Docker source GitHub Repositories to this list
     - repository: docker-source
       type: github
-      name: chirangaalwis/neogenomics-deployment-resources
+      name: chirangaalwis/apim-is-km-deployment-resources
       ref: refs/heads/main
       endpoint: chirangaalwis
 
