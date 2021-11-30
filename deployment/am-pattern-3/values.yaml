@@ -92,7 +92,7 @@ wso2:
         # How often (in seconds) to perform the probe
         periodSeconds: 5
         # Number of attempts
-        failureThreshold: 8
+        failureThreshold: 20
       # Indicates whether the container is running
       livenessProbe:
         # How often (in seconds) to perform the probe
