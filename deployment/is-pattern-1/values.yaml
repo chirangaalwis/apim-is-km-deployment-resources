@@ -124,6 +124,27 @@ wso2:
             nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
 
       customConfig:
+        dataSources:
+          server:
+            hostname: "wso2am-mysql-db-service"
+            port: "3306"
+          databases:
+            shared:
+              name: "WSO2AM_SHARED_DB"
+              username: "shareddbuser"
+              password: "shareddbuserpassword"
+            identity:
+              name: "WSO2IS_IDENTITY_DB"
+              username: "identitydbuser"
+              password: "identitydbuserpassword"
+            bps:
+              name: "WSO2IS_BPS_DB"
+              username: "bpsdbuser"
+              password: "bpsdbuserpassword"
+            consent:
+              name: "WSO2IS_CONSENT_DB"
+              username: "consentdbuser"
+              password: "consentdbuserpassword"
         cryptography:
           securityResourcesSecret: "is-security-resources"
           keyStores:

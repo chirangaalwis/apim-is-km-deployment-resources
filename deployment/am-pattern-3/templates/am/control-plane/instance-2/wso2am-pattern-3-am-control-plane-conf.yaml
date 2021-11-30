@@ -45,22 +45,22 @@ data:
 
     [database.apim_db]
     type = "mysql"
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_DB?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.am.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.am.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.am.customConfig.dataSources.databases.apim.name }}?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false"
+    username = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.apim.username | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.apim.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [database.shared_db]
     type = "mysql"
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.am.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.am.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.am.customConfig.dataSources.databases.shared.name }}?useSSL=false&amp;autoReconnect=true&amp;requireSSL=false&amp;verifyServerCertificate=false"
+    username = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.shared.username | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.shared.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [database.identity_db]
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2IS_IDENTITY_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.am.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.am.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.am.customConfig.dataSources.databases.identity.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.identity.username | quote }}
+    password = {{ .Values.wso2.deployment.am.customConfig.dataSources.databases.identity.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [keystore.primary]

@@ -29,7 +29,9 @@ mysql:
     mysql_apim.sql: |-
       DROP DATABASE IF EXISTS WSO2AM_DB;
       CREATE DATABASE WSO2AM_DB;
-      GRANT ALL ON WSO2AM_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
+
+      CREATE USER 'amdbuser'@'localhost' IDENTIFIED BY 'amdbuserpassword';
+      GRANT INSERT, UPDATE, DELETE, SELECT ON WSO2AM_DB.* TO 'amdbuser'@'%' IDENTIFIED BY 'amdbuserpassword';
 
       USE WSO2AM_DB;
 
@@ -2229,7 +2231,9 @@ mysql:
     mysql_shared.sql: |-
       DROP DATABASE IF EXISTS WSO2AM_SHARED_DB;
       CREATE DATABASE WSO2AM_SHARED_DB;
-      GRANT ALL ON WSO2AM_SHARED_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
+
+      CREATE USER 'shareddbuser'@'localhost' IDENTIFIED BY 'shareddbuserpassword';
+      GRANT INSERT, UPDATE, DELETE, SELECT ON WSO2AM_SHARED_DB.* TO 'shareddbuser'@'%' IDENTIFIED BY 'shareddbuserpassword';
 
       USE WSO2AM_SHARED_DB;
       CREATE TABLE IF NOT EXISTS REG_CLUSTER_LOCK (
@@ -2745,7 +2749,9 @@ mysql:
     mysql_identity.sql: |-
       DROP DATABASE IF EXISTS WSO2IS_IDENTITY_DB;
       CREATE DATABASE WSO2IS_IDENTITY_DB;
-      GRANT ALL ON WSO2IS_IDENTITY_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
+
+      CREATE USER 'identitydbuser'@'localhost' IDENTIFIED BY 'identitydbuserpassword';
+      GRANT INSERT, UPDATE, DELETE, SELECT ON WSO2IS_IDENTITY_DB.* TO 'identitydbuser'@'%' IDENTIFIED BY 'identitydbuserpassword';
 
       USE WSO2IS_IDENTITY_DB;
       CREATE TABLE IF NOT EXISTS IDN_BASE_TABLE (
@@ -3967,7 +3973,9 @@ mysql:
     mysql_is_bps.sql: |-
       DROP DATABASE IF EXISTS WSO2IS_BPS_DB;
       CREATE DATABASE WSO2IS_BPS_DB;
-      GRANT ALL ON WSO2IS_BPS_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
+
+      CREATE USER 'bpsdbuser'@'localhost' IDENTIFIED BY 'bpsdbuserpassword';
+      GRANT INSERT, UPDATE, DELETE, SELECT ON WSO2IS_BPS_DB.* TO 'bpsdbuser'@'%' IDENTIFIED BY 'bpsdbuserpassword';
 
       USE WSO2IS_BPS_DB;
       --
@@ -4145,6 +4153,9 @@ mysql:
       DROP DATABASE IF EXISTS WSO2IS_CONSENT_DB;
       CREATE DATABASE WSO2IS_CONSENT_DB;
       GRANT ALL ON WSO2IS_CONSENT_DB.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';
+
+      CREATE USER 'consentdbuser'@'localhost' IDENTIFIED BY 'consentdbuserpassword';
+      GRANT INSERT, UPDATE, DELETE, SELECT ON WSO2IS_CONSENT_DB.* TO 'consentdbuser'@'%' IDENTIFIED BY 'consentdbuserpassword';
 
       USE WSO2IS_CONSENT_DB;
 

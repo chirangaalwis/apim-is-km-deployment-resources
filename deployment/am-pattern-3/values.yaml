@@ -105,6 +105,23 @@ wso2:
         periodSeconds: 10
 
       customConfig:
+        dataSources:
+          server:
+            hostname: "wso2am-mysql-db-service"
+            port: "3306"
+          databases:
+            apim:
+              name: "WSO2AM_DB"
+              username: "amdbuser"
+              password: "amdbuserpassword"
+            shared:
+              name: "WSO2AM_SHARED_DB"
+              username: "shareddbuser"
+              password: "shareddbuserpassword"
+            identity:
+              name: "WSO2IS_IDENTITY_DB"
+              username: "identitydbuser"
+              password: "identitydbuserpassword"
         cryptography:
           securityResourcesSecret: "am-security-resources"
           keyStores:

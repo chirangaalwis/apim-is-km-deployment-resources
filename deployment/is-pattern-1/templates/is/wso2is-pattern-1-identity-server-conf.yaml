@@ -43,9 +43,9 @@ data:
     type = "database_unique_id"
 
     [database.user]
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.username | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [database.user.pool_options]
@@ -55,18 +55,18 @@ data:
     proxyPort="443"
 
     [database.identity_db]
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2IS_IDENTITY_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.username | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [database.identity_db.pool_options]
     validationQuery = "SELECT 1"
 
     [database.shared_db]
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2AM_SHARED_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.username | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [account_recovery.endpoint.auth]
@@ -79,9 +79,9 @@ data:
     validationQuery = "SELECT 1"
 
     [database.bps_database]
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2IS_BPS_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.username | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
 
     [database.bps_database.pool_options]
@@ -89,9 +89,9 @@ data:
 
     [[datasource]]
     id = "WSO2ConsentDS"
-    url = "jdbc:mysql://wso2am-mysql-db-service:3306/WSO2IS_CONSENT_DB?autoReconnect=true&amp;useSSL=false"
-    username = "wso2carbon"
-    password = "wso2carbon"
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.name }}?autoReconnect=true&amp;useSSL=false"
+    username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.username | quote }}
+    password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
     pool_options.validationQuery="SELECT 1"
     pool_options.maxActive=50
