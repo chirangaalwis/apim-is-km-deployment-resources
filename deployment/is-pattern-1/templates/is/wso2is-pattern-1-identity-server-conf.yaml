@@ -43,10 +43,17 @@ data:
     type = "database_unique_id"
 
     [database.user]
-    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false"
+    {{- if .Values.wso2.deployment.wso2is.customConfig.dataSources.server.enableSSL }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;sslMode=VERIFY_CA&amp;serverTimezone=UTC&amp;enabledTLSProtocols=TLSv1.2"
+    {{- else }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"
+    {{- end }}
     username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.username | quote }}
     password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
+
+    [realm_manager]
+    data_source = "WSO2USER_DB"
 
     [database.user.pool_options]
     validationQuery = "SELECT 1"
@@ -55,7 +62,11 @@ data:
     proxyPort="443"
 
     [database.identity_db]
-    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.name }}?autoReconnect=true&amp;useSSL=false"
+    {{- if .Values.wso2.deployment.wso2is.customConfig.dataSources.server.enableSSL }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.name }}?autoReconnect=true&amp;sslMode=VERIFY_CA&amp;serverTimezone=UTC&amp;enabledTLSProtocols=TLSv1.2"
+    {{- else }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.name }}?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"
+    {{- end }}
     username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.username | quote }}
     password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.identity.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
@@ -64,7 +75,11 @@ data:
     validationQuery = "SELECT 1"
 
     [database.shared_db]
-    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false"
+    {{- if .Values.wso2.deployment.wso2is.customConfig.dataSources.server.enableSSL }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;sslMode=VERIFY_CA&amp;serverTimezone=UTC&amp;enabledTLSProtocols=TLSv1.2"
+    {{- else }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.name }}?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"
+    {{- end }}
     username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.username | quote }}
     password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.shared.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
@@ -79,7 +94,11 @@ data:
     validationQuery = "SELECT 1"
 
     [database.bps_database]
-    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.name }}?autoReconnect=true&amp;useSSL=false"
+    {{- if .Values.wso2.deployment.wso2is.customConfig.dataSources.server.enableSSL }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.name }}?autoReconnect=true&amp;sslMode=VERIFY_CA&amp;serverTimezone=UTC&amp;enabledTLSProtocols=TLSv1.2"
+    {{- else }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.name }}?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"
+    {{- end }}
     username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.username | quote }}
     password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.bps.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
@@ -87,9 +106,13 @@ data:
     [database.bps_database.pool_options]
     validationQuery = "SELECT 1"
 
-    [[datasource]]
+    [datasource.WSO2ConsentDS]
     id = "WSO2ConsentDS"
-    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.name }}?autoReconnect=true&amp;useSSL=false"
+    {{- if .Values.wso2.deployment.wso2is.customConfig.dataSources.server.enableSSL }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.name }}?autoReconnect=true&amp;sslMode=VERIFY_CA&amp;serverTimezone=UTC&amp;enabledTLSProtocols=TLSv1.2"
+    {{- else }}
+    url = "jdbc:mysql://{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.hostname }}:{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.server.port }}/{{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.name }}?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"
+    {{- end }}
     username = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.username | quote }}
     password = {{ .Values.wso2.deployment.wso2is.customConfig.dataSources.databases.consent.password | quote }}
     driver = "com.mysql.cj.jdbc.Driver"
@@ -139,7 +162,7 @@ data:
     [carbon_health_check]
     enable= true
     health_checker.super_tenant_health_checker.properties.'monitored.user.stores' = "primary"
-    health_checker.data_source_health_checker.properties.'monitored.datasources' = "jdbc/WSO2CarbonDB,jdbc/WSO2USER_DB,jdbc/SHARED_DB,jdbc/WSO2ConsentDS,jdbc/WSO2IdentityDB"
+    health_checker.data_source_health_checker.properties.'monitored.datasources' = "jdbc/WSO2CarbonDB,jdbc/WSO2USER_DB,jdbc/SHARED_DB,jdbc/WSO2IdentityDB,jdbc/WSO2ConsentDS"
 
     [[event_listener]]
     id = "token_revocation"
