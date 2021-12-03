@@ -27,13 +27,13 @@ data:
     type = "read_only_ldap"
 
     [keystore.primary]
-    file_name = "repository/resources/security/primaryKeyStore.jks"
+    file_name = "repository/resources/security/primary-keystore.jks"
     alias = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.primary.alias | quote }}
     password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.primary.password | quote }}
     key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.primary.password | quote }}
 
     [keystore.internal]
-    file_name = "repository/resources/security/internalKeyStore.jks"
+    file_name = "repository/resources/security/internal-keystore.jks"
     alias = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.alias | quote }}
     password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.password | quote }}
     key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.password | quote }}
@@ -45,17 +45,17 @@ data:
     algorithm = "AES"
 
     [transport.http.listener.keystore]
-    location = "repository/resources/security/secondaryKeyStore.jks"
+    location = "repository/resources/security/secondary-keystore.jks"
     password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
     key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
 
     [transport.http.sender.keystore]
-    location = "repository/resources/security/secondaryKeyStore.jks"
+    location = "repository/resources/security/secondary-keystore.jks"
     password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
     key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
 
     [internal_api_ssl_config.key_store]
-    location = "repository/resources/security/secondaryKeyStore.jks"
+    location = "repository/resources/security/secondary-keystore.jks"
     password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
     key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
 

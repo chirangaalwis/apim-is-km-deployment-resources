@@ -47,21 +47,21 @@ data:
     password = "wso2carbon"
 
     [keystore.primary]
-    file_name =  "primaryKeyStore.jks"
+    file_name =  "primary-keystore.jks"
     type =  "JKS"
     alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.alias | quote }}
     password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.password | quote }}
     key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.primary.password | quote }}
 
     [keystore.tls]
-    file_name =  "secondaryKeyStore.jks"
+    file_name =  "secondary-keystore.jks"
     type =  "JKS"
     alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.alias | quote }}
     password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.password | quote }}
     key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.secondary.password | quote }}
 
     [keystore.internal]
-    file_name =  "internalKeyStore.jks"
+    file_name =  "internal-keystore.jks"
     type =  "JKS"
     alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.alias | quote }}
     password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
