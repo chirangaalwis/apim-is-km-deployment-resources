@@ -114,20 +114,14 @@ wso2:
           databases:
             apim:
               name: "wso2am_db"
-#              name: "WSO2AM_DB"
-#              username: "amdbuser"
               username: "amdbuser@neowso2"
               password: "amdbuserpassword"
             shared:
               name: "wso2am_shared_db"
-#              name: "WSO2AM_SHARED_DB"
-#              username: "shareddbuser"
               username: "shareddbuser@neowso2"
               password: "shareddbuserpassword"
             identity:
               name: "wso2is_identity_db"
-#              name: "WSO2IS_IDENTITY_DB"
-#              username: "identitydbuser"
               username: "identitydbuser@neowso2"
               password: "identitydbuserpassword"
         cryptography:
@@ -197,7 +191,7 @@ wso2:
           # How often (in seconds) to perform the probe
           periodSeconds: 5
           # Number of attempts
-          failureThreshold: 8
+          failureThreshold: 20
         # Indicates whether the container is running
         livenessProbe:
           # How often (in seconds) to perform the probe

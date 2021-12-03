@@ -133,22 +133,18 @@ wso2:
           databases:
             shared:
               name: "wso2am_shared_db"
-#              name: "WSO2AM_SHARED_DB"
               username: "shareddbuser@neowso2"
               password: "shareddbuserpassword"
             identity:
               name: "wso2is_identity_db"
-#              name: "WSO2IS_IDENTITY_DB"
               username: "identitydbuser@neowso2"
               password: "identitydbuserpassword"
             bps:
               name: "wso2is_bps_db"
-#              name: "WSO2IS_BPS_DB"
               username: "bpsdbuser@neowso2"
               password: "bpsdbuserpassword"
             consent:
               name: "wso2is_consent_db"
-#              name: "WSO2IS_CONSENT_DB"
               username: "consentdbuser@neowso2"
               password: "consentdbuserpassword"
         cryptography:
