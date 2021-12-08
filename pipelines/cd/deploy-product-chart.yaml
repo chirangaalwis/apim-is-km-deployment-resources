@@ -1,0 +1,64 @@
+# -------------------------------------------------------------------------------------
+# Azure DevOps Pipeline for deploying a WSO2 Product Helm Chart
+# --------------------------------------------------------------------------------------
+
+parameters:
+  # Target Kubernetes environment configurations
+  # Azure DevOps Service Connection to the target Azure Kubernetes Service cluster
+  - name: KUBERNETES_SERVICE_CONNECTION
+    type: string
+  # Name of the Kubernetes Namespace for deploying the product workloads
+  - name: KUBERNETES_NAMESPACE_FOR_PRODUCT_WORKLOADS
+    type: string
+  # Helm configurations
+  # Helm version to be used
+  - name: HELM_VERSION
+    type: string
+    default: '3.7.1'
+  # Path to the root of the product Helm Chart (relative to the Git Repository)
+  - name: HELM_CHART_ROOT
+    type: string
+  # Name of the Helm Release deployed using the product Helm Chart
+  - name: HELM_RELEASE_NAME
+    type: string
+  # Input values for the Helm based product deployment
+  - name: HELM_INPUT_VALUES
+    type: string
+  # Target Azure Key Vault configurations
+  # Azure DevOps Service Connection to the target Azure Key Vault
+  - name: AZURE_KEY_VAULT_SERVICE_CONNECTION
+    type: string
+  # Name of the target Azure Key Vault
+  - name: DEPLOYMENT_AZURE_KEY_VAULT_NAME
+    type: string
+
+jobs:
+  - job: deploy_open_healthcare
+    displayName: 'Deploy the Kubernetes based WSO2 product workloads'
+    variables:
+      HELM_CHART_SOURCE_REPO_DIR: 'product-helm-chart'
+    steps:
+      - task: HelmInstaller@0
+        displayName: 'Install Helm'
+        inputs:
+          helmVersionToInstall: ${{ parameters.HELM_VERSION }}
+      - task: AzureKeyVault@1
+        displayName: 'Retrieve Secrets for the product deployment from Azure Key Vault'
+        inputs:
+          azureSubscription: ${{ parameters.AZURE_KEY_VAULT_SERVICE_CONNECTION }}
+          KeyVaultName: ${{ parameters.DEPLOYMENT_AZURE_KEY_VAULT_NAME }}
+          RunAsPreJob: true
+      - task: HelmDeploy@0
+        displayName: 'Install/Upgrade Helm Release using the WSO2 product Helm Chart'
+        inputs:
+          connectionType: 'Kubernetes Service Connection'
+          kubernetesServiceConnection: ${{ parameters.KUBERNETES_SERVICE_CONNECTION }}
+          namespace: ${{ parameters.KUBERNETES_NAMESPACE_FOR_PRODUCT_WORKLOADS }}
+          command: 'upgrade'
+          chartType: 'FilePath'
+          chartPath: '$(Agent.BuildDirectory)/$(HELM_CHART_SOURCE_REPO_DIR)/${{ parameters.HELM_CHART_ROOT }}'
+          releaseName: ${{ parameters.HELM_RELEASE_NAME }}
+          valueFile: '$(Agent.BuildDirectory)/$(HELM_CHART_SOURCE_REPO_DIR)/${{ parameters.HELM_CHART_ROOT }}/values.yaml'
+          waitForExecution: false
+          arguments: '--debug'
+          overrideValues: ${{ parameters.HELM_INPUT_VALUES }}

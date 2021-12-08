@@ -1,0 +1,22 @@
+# -------------------------------------------------------------------------------------
+# Common Azure DevOps Pipeline Variables
+# --------------------------------------------------------------------------------------
+
+variables:
+  # Note: Variables marked with 'variable group' indicator can be considered to be included in a DevOps Variable Group
+  # These variables are common among multiple pipelines
+
+  # Azure DevOps Service Connection to the Azure Key Vault holding the product secrets
+  AZURE_KEY_VAULT_SERVICE_CONNECTION: 'neogenomics-kv'
+  # Name of the Azure Key Vault for the product deployment
+  DEPLOYMENT_AZURE_KEY_VAULT_NAME: 'neogenomics'   # variable group
+
+  # Azure DevOps Service Connection to the target Azure Kubernetes Service cluster
+  KUBERNETES_SERVICE_CONNECTION: 'neogenomics-evaluation-cluster'   # variable group
+  # Name of the Kubernetes Namespace for deploying the product workloads
+  KUBERNETES_NAMESPACE_FOR_PRODUCT_DEPLOYMENT: 'wso2'   # variable group
+
+  # Name of the Helm Chart used for the WSO2 product deployment
+  HELM_CHART_ROOT: 'deployment/am-pattern-3'
+  # Name of the Helm Release of the WSO2 product deployment
+  HELM_RELEASE_NAME: 'apim'
