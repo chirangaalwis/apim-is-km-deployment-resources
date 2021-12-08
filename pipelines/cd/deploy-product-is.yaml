@@ -1,0 +1,38 @@
+# -------------------------------------------------------------------------------------
+# Azure DevOps Pipeline for deploying a WSO2 Identity Server Product Helm Chart
+# --------------------------------------------------------------------------------------
+
+trigger:
+  - none
+
+variables:
+  - template: ./common-variables.yaml
+  - group: WSO2_SUB_CONFIGURATIONS
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    - repository: product-helm-chart-source
+      type: github
+      name: chirangaalwis/apim-is-km-deployment-resources
+      ref: refs/heads/enable-secure-vault
+      endpoint: chirangaalwis
+
+jobs:
+  - template: ./deploy-product-chart.yaml
+    parameters:
+      KUBERNETES_SERVICE_CONNECTION: $(KUBERNETES_SERVICE_CONNECTION)
+      KUBERNETES_NAMESPACE_FOR_PRODUCT_WORKLOADS: $(KUBERNETES_NAMESPACE_FOR_PRODUCT_DEPLOYMENT)
+      HELM_CHART_ROOT: 'deployment/is-pattern-1'
+      HELM_RELEASE_NAME: 'identity'
+      AZURE_KEY_VAULT_SERVICE_CONNECTION: $(AZURE_KEY_VAULT_SERVICE_CONNECTION)
+      DEPLOYMENT_AZURE_KEY_VAULT_NAME: $(DEPLOYMENT_AZURE_KEY_VAULT_NAME)
+      HELM_INPUT_VALUES: |
+        wso2.deployment.wso2is.dockerRegistry="wso2srernd.azurecr.io"
+        wso2.deployment.wso2is.imageName=wso2is-km
+        wso2.deployment.wso2is.customConfig.cryptography.keyStores.primary.password=$(IS-PRIMARY-KEYSTORE-PASSWORD)
+        wso2.deployment.wso2is.customConfig.cryptography.keyStores.secondary.password=$(IS-SECONDARY-KEYSTORE-PASSWORD)
+        wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password=$(IS-INTERNAL-KEYSTORE-PASSWORD)
+        wso2.deployment.wso2is.customConfig.cryptography.trustStorePassword=$(IS-CERT-TRUST-STORE-PASSWORD)
