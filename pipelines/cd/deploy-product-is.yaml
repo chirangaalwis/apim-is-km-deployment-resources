@@ -7,7 +7,6 @@ trigger:
 
 variables:
   - template: ./common-variables.yaml
-  - group: WSO2_SUB_CONFIGURATIONS
 
 pool:
   vmImage: 'ubuntu-latest'
