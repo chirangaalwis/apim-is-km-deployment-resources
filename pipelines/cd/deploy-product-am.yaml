@@ -12,7 +12,7 @@ trigger:
   - none
 
 variables:
-  - template: ./variables.yaml
+  - template: ./common-variables.yaml
   - group: WSO2_SUB_CONFIGURATIONS
 
 pool:
