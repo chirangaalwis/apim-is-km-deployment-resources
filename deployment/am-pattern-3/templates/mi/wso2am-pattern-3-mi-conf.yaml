@@ -35,8 +35,8 @@ data:
     [keystore.internal]
     file_name = "repository/resources/security/internal-keystore.jks"
     alias = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.alias | quote }}
-    password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.password | quote }}
-    key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.password | quote }}
+    password = "$secret{internalKeyStorePassword}"
+    key_password = "$secret{internalKeyStorePassword}"
 
     [truststore]
     file_name = "repository/resources/security/client-truststore.jks"
@@ -46,18 +46,18 @@ data:
 
     [transport.http.listener.keystore]
     location = "repository/resources/security/secondary-keystore.jks"
-    password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
-    key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
+    password = "$secret{secondaryKeyStorePassword}"
+    key_password = "$secret{secondaryKeyStorePassword}"
 
     [transport.http.sender.keystore]
     location = "repository/resources/security/secondary-keystore.jks"
-    password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
-    key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
+    password = "$secret{secondaryKeyStorePassword}"
+    key_password = "$secret{secondaryKeyStorePassword}"
 
     [internal_api_ssl_config.key_store]
     location = "repository/resources/security/secondary-keystore.jks"
-    password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
-    key_password = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
+    password = "$secret{secondaryKeyStorePassword}"
+    key_password = "$secret{secondaryKeyStorePassword}"
 
     ## Following are set of example configs. Please refer docs for complete set of configurations.
 
@@ -147,3 +147,9 @@ data:
     # enable = true
     # username = "admin"
     # password = "admin"
+
+    {{- if .Values.wso2.deployment.mi.customConfig.cryptography.enableSecureVault }}
+    [secrets]
+    secondaryKeyStorePassword = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.secondary.password | quote }}
+    internalKeyStorePassword = {{ .Values.wso2.deployment.mi.customConfig.cryptography.keyStores.internal.password | quote }}
+    {{- end }}

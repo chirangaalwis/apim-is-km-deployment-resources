@@ -1,3 +1,4 @@
+    {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
 # Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +16,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "am-pattern-3.resource.prefix" . }}-am-cp-conf-entrypoint
+  name: {{ template "am-pattern-3.resource.prefix" . }}-am-gateway-conf-entrypoint
   namespace: {{ .Release.Namespace }}
 data:
   docker-entrypoint.sh: |
@@ -55,15 +56,6 @@ data:
       fi
     done
 
-    {{- if .Values.wso2.deployment.persistentRuntimeArtifacts.apacheSolrIndexing.enabled }}
-    # Copying carbon_db
-    if ! test -f /home/wso2carbon/solr/database/WSO2CARBON_DB.mv.db
-    then
-      echo "Copying WSO2CARBON_DB.mv.db" >&2
-      cp ${WSO2_SERVER_HOME}/repository/database/WSO2CARBON_DB.mv.db /home/wso2carbon/solr/database/
-    fi
-    {{ end }}
-
     # optimize WSO2 Carbon Server, if the profile name is defined as an environment variable
     if [[ ! -z "${PROFILE_NAME}" ]]
     then
@@ -76,10 +68,8 @@ data:
     # copy any artifact changes mounted to artifact_volume
     test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
-    {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
     # copy the decrypted internal keystore password to the password-tmp file
     cp ${secret_mount_path}/{{ .Values.wso2.deployment.am.customConfig.cryptography.secret.identifiers.internalKeyStorePassword }} ${WSO2_SERVER_HOME}/password-tmp
-    {{- end }}
 
     # start WSO2 Carbon server
     echo "Start WSO2 Carbon server" >&2
@@ -91,3 +81,4 @@ data:
       # start the server with the specified profile and provided startup arguments
       sh ${WSO2_SERVER_HOME}/bin/api-manager.sh -Dprofile=${PROFILE_NAME} "$@"
     fi
+    {{- end }}

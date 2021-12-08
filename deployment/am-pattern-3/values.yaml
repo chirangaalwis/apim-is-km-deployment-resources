@@ -125,6 +125,7 @@ wso2:
               username: "identitydbuser@neowso2"
               password: "identitydbuserpassword"
         cryptography:
+          enableSecureVault: true
           securityResourcesSecret: "am-security-resources"
           keyStores:
             primary:
@@ -137,6 +138,13 @@ wso2:
               alias: "wso2carboninternal"
               password: "${AM_INTERNAL_KEY_STORE_PASSWORD}"
           trustStorePassword: "${AM_TRUST_STORE_PASSWORD}"
+          # Inject plain text secrets to product container
+          secret:
+            name: "wso2am-secrets"
+            mountPath: "/mnt/secrets"
+            identifiers:
+              # Secret literal identifier for the decrypted internal key store password
+              internalKeyStorePassword: "AM_INTERNAL_KEY_STORE_PASSWORD"
 
       # API Manager's WebSub specific configurations
       websub:
@@ -310,6 +318,7 @@ wso2:
 
       customConfig:
         cryptography:
+          enableSecureVault: true
           securityResourcesSecret: "mi-security-resources"
           keyStores:
             primary:
@@ -322,6 +331,13 @@ wso2:
               alias: "wso2carboninternal"
               password: "${MI_INTERNAL_KEY_STORE_PASSWORD}"
           trustStorePassword: "${MI_TRUST_STORE_PASSWORD}"
+          # Inject plain text secrets to product container
+          secret:
+            name: "wso2mi-secrets"
+            mountPath: "/mnt/secrets"
+            identifiers:
+              # Secret literal identifier for the decrypted internal key store password
+              internalKeyStorePassword: "MI_INTERNAL_KEY_STORE_PASSWORD"
 
 kubernetes:
   # Name of Kubernetes service account

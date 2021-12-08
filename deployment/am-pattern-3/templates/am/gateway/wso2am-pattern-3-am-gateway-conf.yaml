@@ -64,8 +64,8 @@ data:
     file_name =  "internal-keystore.jks"
     type =  "JKS"
     alias =  {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.alias | quote }}
-    password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
-    key_password = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
+    password = "$secret{internalKeyStorePassword}"
+    key_password = "$secret{internalKeyStorePassword}"
 
     [truststore]
     file_name = "client-truststore.jks"
@@ -155,4 +155,8 @@ data:
     [transport.passthru_https.sender.parameters]
     HostnameVerifier = "AllowAll"
 
+    {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
+    [secrets]
+    internalKeyStorePassword = {{ .Values.wso2.deployment.am.customConfig.cryptography.keyStores.internal.password | quote }}
+    {{- end }}
   {{- end }}

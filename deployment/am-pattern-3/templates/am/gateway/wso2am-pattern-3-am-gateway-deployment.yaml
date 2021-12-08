@@ -103,6 +103,15 @@ spec:
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf
         - name: wso2am-security-resources
           mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
+        {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
+        - name: wso2-secrets
+          mountPath: {{ .Values.wso2.deployment.am.customConfig.cryptography.secret.mountPath }}
+        - name: wso2am-security-conf
+          mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/security
+        - name: wso2am-entrypoint
+          mountPath: /home/wso2carbon/docker-entrypoint.sh
+          subPath: docker-entrypoint.sh
+        {{- end }}
       serviceAccountName: {{ .Values.kubernetes.serviceAccount }}
       {{- if .Values.wso2.deployment.am.imagePullSecrets }}
       imagePullSecrets:
@@ -118,3 +127,15 @@ spec:
       - name: wso2am-security-resources
         secret:
           secretName: {{ .Values.wso2.deployment.am.customConfig.cryptography.securityResourcesSecret | quote }}
+      {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
+      - name: wso2am-security-conf
+        configMap:
+          name: {{ template "am-pattern-3.resource.prefix" . }}-am-security-conf
+      - name: wso2am-entrypoint
+        configMap:
+          name: {{ template "am-pattern-3.resource.prefix" . }}-am-gateway-conf-entrypoint
+          defaultMode: 0407
+      - name: wso2-secrets
+        secret:
+          secretName: {{ .Values.wso2.deployment.am.customConfig.cryptography.secret.name | quote }}
+      {{- end }}

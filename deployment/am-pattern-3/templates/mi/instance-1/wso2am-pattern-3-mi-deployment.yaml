@@ -31,6 +31,8 @@ spec:
       node: {{ template "am-pattern-3.resource.prefix" . }}-mi-1
   template:
     metadata:
+      annotations:
+        checksum.mi.conf: {{ include (print $.Template.BasePath "/mi/wso2am-pattern-3-mi-conf.yaml") . | sha256sum }}
       labels:
         deployment: {{ template "am-pattern-3.resource.prefix" . }}-mi
         node: {{ template "am-pattern-3.resource.prefix" . }}-mi-1
@@ -102,6 +104,12 @@ spec:
           volumeMounts:
             - name: wso2mi-conf
               mountPath: /home/wso2carbon/wso2-config-volume/conf
+            {{- if .Values.wso2.deployment.am.customConfig.cryptography.enableSecureVault }}
+            - name: wso2mi-security-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/conf/security
+            - name: wso2-secrets
+              mountPath: {{ .Values.wso2.deployment.mi.customConfig.cryptography.secret.mountPath }}
+            {{- end }}
             - name: wso2mi-security-resources
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
             - name: wso2mi-conf-entrypoint
@@ -119,6 +127,14 @@ spec:
         - name: wso2mi-conf
           configMap:
             name: {{ template "am-pattern-3.resource.prefix" . }}-mi-conf
+        {{- if .Values.wso2.deployment.mi.customConfig.cryptography.enableSecureVault }}
+        - name: wso2mi-security-conf
+          configMap:
+            name: {{ template "am-pattern-3.resource.prefix" . }}-mi-security-conf
+        - name: wso2-secrets
+          secret:
+            secretName: {{ .Values.wso2.deployment.mi.customConfig.cryptography.secret.name | quote }}
+        {{- end }}
         - name: wso2mi-security-resources
           secret:
             secretName: {{ .Values.wso2.deployment.mi.customConfig.cryptography.securityResourcesSecret | quote }}
