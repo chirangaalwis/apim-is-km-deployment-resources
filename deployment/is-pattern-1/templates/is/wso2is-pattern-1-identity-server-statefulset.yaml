@@ -138,6 +138,16 @@ spec:
               mountPath: /home/wso2carbon/wso2-config-volume/bin
             - name: wso2is-security-resources
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/resources/security
+            {{ if .Values.wso2.deployment.wso2is.customConfig.cryptography.enableSecureVault }}
+            - name: wso2-secrets
+              mountPath: {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.secret.mountPath }}
+            - name: identity-server-security-conf
+              mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/security/secret-conf.properties
+              subPath: secret-conf.properties
+            - name: identity-server-entrypoint
+              mountPath: /home/wso2carbon/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            {{ end }}
             {{ if .Values.wso2.deployment.dependencies.mysql.enabled }}
             - name: mysql-connector-jar
               mountPath: /home/wso2carbon/wso2-artifact-volume/repository/components/dropins
@@ -209,6 +219,18 @@ spec:
       - name: wso2is-security-resources
         secret:
           secretName: {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.securityResourcesSecret | quote }}
+      {{ if .Values.wso2.deployment.wso2is.customConfig.cryptography.enableSecureVault }}
+      - name: wso2-secrets
+        secret:
+          secretName: {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.secret.name | quote }}
+      - name: identity-server-security-conf
+        configMap:
+          name: {{ template "is-pattern-1.resource.prefix" . }}-identity-server-security-conf
+      - name: identity-server-entrypoint
+        configMap:
+          name: {{ template "is-pattern-1.resource.prefix" . }}-identity-server-entrypoint
+          defaultMode: 0407
+      {{ end }}
       {{ if .Values.wso2.deployment.persistentRuntimeArtifacts.sharedArtifacts.enabled }}
       - name: identity-server-volume-claim-tenants-storage
         persistentVolumeClaim:

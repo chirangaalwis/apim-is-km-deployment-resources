@@ -142,8 +142,8 @@ data:
     file_name =  "internal-keystore.jks"
     type =  "JKS"
     alias =  {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.alias | quote }}
-    password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password | quote }}
-    key_password = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password | quote }}
+    password = "$secret{internalKeyStorePassword}"
+    key_password = "$secret{internalKeyStorePassword}"
 
     [truststore]
     file_name = "client-truststore.jks"
@@ -234,5 +234,10 @@ data:
     {{ if .Values.wso2.monitoring.enabled }}
     [monitoring.jmx]
     rmi_server_start = true
+    {{- end }}
+
+    {{- if .Values.wso2.deployment.wso2is.customConfig.cryptography.enableSecureVault }}
+    [secrets]
+    internalKeyStorePassword = {{ .Values.wso2.deployment.wso2is.customConfig.cryptography.keyStores.internal.password | quote }}
     {{- end }}
   {{- end }}

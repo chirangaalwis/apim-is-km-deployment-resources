@@ -148,6 +148,7 @@ wso2:
               username: "consentdbuser@neowso2"
               password: "consentdbuserpassword"
         cryptography:
+          enableSecureVault: true
           securityResourcesSecret: "is-security-resources"
           keyStores:
             primary:
@@ -160,6 +161,13 @@ wso2:
               alias: "wso2carboninternal"
               password: "${IS_INTERNAL_KEY_STORE_PASSWORD}"
           trustStorePassword: "${IS_TRUST_STORE_PASSWORD}"
+          # Inject plain text secrets to product container
+          secret:
+            name: "wso2is-secrets"
+            mountPath: "/mnt/secrets"
+            identifiers:
+              # Secret literal identifier for the decrypted internal key store password
+              internalKeyStorePassword: "IS_INTERNAL_KEY_STORE_PASSWORD"
 
   # Configurations for the logstash container image and elasticsearch authorization credentials
   # Centralized logging is disabled by default. If it is required to enable centralized logging, please follow the instructions
