@@ -38,6 +38,8 @@ jobs:
     variables:
       HELM_CHART_SOURCE_REPO_DIR: 'product-helm-chart'
     steps:
+      - checkout: product-helm-chart-source
+        path: $(HELM_CHART_SOURCE_REPO_DIR)
       - task: HelmInstaller@0
         displayName: 'Install Helm'
         inputs:
