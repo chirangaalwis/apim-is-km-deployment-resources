@@ -2,6 +2,12 @@
 # Azure DevOps Pipeline for deploying a WSO2 API Manager Product Helm Chart
 # --------------------------------------------------------------------------------------
 
+parameters:
+  - name: AM_UPDATE_LEVEL
+    type: string
+    default: '51'
+    displayName: 'WSO2 Update level of WSO2 API Manager to be used'
+
 trigger:
   - none
 
@@ -34,7 +40,7 @@ jobs:
         wso2.subscription.password=$(WSO2_SUBSCRIPTION_PASSWORD)
         wso2.deployment.am.dockerRegistry="wso2srernd.azurecr.io"
         wso2.deployment.am.imageName=wso2am
-        wso2.deployment.am.imageTag="4.0.0.51"
+        wso2.deployment.am.imageTag="4.0.0.${{ parameters.AM_UPDATE_LEVEL }}"
         wso2.deployment.am.customConfig.cryptography.keyStores.primary.password=$(AM-PRIMARY-KEYSTORE-PASSWORD)
         wso2.deployment.am.customConfig.cryptography.keyStores.secondary.password=$(AM-SECONDARY-KEYSTORE-PASSWORD)
         wso2.deployment.am.customConfig.cryptography.keyStores.internal.password=$(AM-INTERNAL-KEYSTORE-PASSWORD)
